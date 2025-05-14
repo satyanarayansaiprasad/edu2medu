@@ -51,13 +51,13 @@ export default function Header() {
     <Phone className="h-6 w-6 text-white" />
   </motion.div>
   <motion.a
-    href="tel:+919811247700"
+    href="tel:+919274333156"
     className="text-lg lg:text-2xl font-bold"
     initial={{ scale: 1 }}
     animate={{ scale: [1, 1.1, 1] }}
     transition={{ repeat: Infinity, duration: 1, ease: "easeInOut" }}
   >
-    +91 9811247700
+    +91 9274333156
   </motion.a>
 </div>
 
