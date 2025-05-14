@@ -33,8 +33,8 @@ const Footer = () => {
           </div>
           <div>
             <h3 className="text-xl font-semibold mb-4">Contact</h3>
-            <p className="text-sm">123 Main Street, Cityville, Country</p>
-            <p className="text-sm">Phone: (123) 456-7890</p>
+            <p className="text-sm">Sejal complex, Palanpur patiya surat,395009</p>
+            <p className="text-sm">Phone:+91 9274333156</p>
             <p className="text-sm">Email: info@edu2medu.com</p>
           </div>
 
