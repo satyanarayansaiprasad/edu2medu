@@ -20,7 +20,7 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
   'http://localhost:5173', // Add your frontend origin here
   'https://edu2medu-nine.vercel.app',
   'https://www.edu2medu.com',
-  'https://edu2medu.com',
+  'https://edu2medu.com'
 ];
 
 app.use(
