@@ -18,7 +18,7 @@ mongoose
 // Load allowed origins from .env and split into an array
 const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
   'http://localhost:5173', // Add your frontend origin here
-  'https://edu2medu.vercel.app',
+  'https://edu2medu-nine.vercel.app',
 ];
 
 app.use(
