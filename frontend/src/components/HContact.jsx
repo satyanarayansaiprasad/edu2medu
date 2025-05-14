@@ -103,8 +103,8 @@ const HContact = () => {
               <h3 className="text-xl font-semibold text-gray-900">Phone Number</h3>
               <p className="text-sm text-gray-500">Give us a call</p>
               <div className="space-y-1 pt-2">
-                <p className="text-gray-600">+91-9876543210</p>
-                <p className="text-gray-600">+1-800-123-4567</p>
+                <p className="text-gray-600">+91-9274333156</p>
+{/*                 <p className="text-gray-600">+1-800-123-4567</p> */}
               </div>
             </div>
           </div>
@@ -131,8 +131,8 @@ const HContact = () => {
               <h3 className="text-xl font-semibold text-gray-900">Office Address</h3>
               <p className="text-sm text-gray-500">Visit us at</p>
               <div className="space-y-1 pt-2">
-                <p className="text-gray-600">123 Main Street, Suite 456</p>
-                <p className="text-gray-600">City, STATE-123456, Country</p>
+                <p className="text-gray-600"> Sejal complex, Palanpur patiya surat</p>
+                <p className="text-gray-600">395009, India</p>
               </div>
             </div>
           </div>
