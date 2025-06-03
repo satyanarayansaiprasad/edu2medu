@@ -59,13 +59,13 @@ const Login = () => {
           redirectPath = "/admin-dashboard";
         }
   
-        console.log("✅ Redirecting to:", redirectPath);
-        console.log("✅ Session Storage Updated:", {
-          user: sessionStorage.getItem("user"),
-          admin: sessionStorage.getItem("admin"),
-          isAuthenticated: sessionStorage.getItem("isAuthenticated"),
-          userType: sessionStorage.getItem("userType"),
-        });
+        // console.log("✅ Redirecting to:", redirectPath);
+        // console.log("✅ Session Storage Updated:", {
+        //   user: sessionStorage.getItem("user"),
+        //   admin: sessionStorage.getItem("admin"),
+        //   isAuthenticated: sessionStorage.getItem("isAuthenticated"),
+        //   userType: sessionStorage.getItem("userType"),
+        // });
   
         // Using `window.location.href` for better reliability
         window.location.href = redirectPath;
