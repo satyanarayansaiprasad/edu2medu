@@ -24,7 +24,7 @@ const AdminResetPassword = () => {
 
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_BASEURI}/admin/adminresetpassword`,
+                `${import.meta.env.VITE_BASEURI}/admin/admin-forgotpassword`,
                 { email }, // Data to send in the request body
                 {
                     headers: { "Content-Type": "application/json" }, // Headers

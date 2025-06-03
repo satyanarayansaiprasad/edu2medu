@@ -35,7 +35,7 @@ AdminRouter.get('/getContacts',getContacts)
 
 
 
-AdminRouter.post('/adminresetpassword',sendPasswordLink)
+AdminRouter.post('/admin-resetpassword',sendPasswordLink)
 AdminRouter.get('/admin-forgotpassword/:id/:token',adminforgotpassword)
 AdminRouter.post('/admin-updatepassword/:id/:token',resetPassword)
 
