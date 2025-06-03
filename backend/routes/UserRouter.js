@@ -23,6 +23,7 @@ UserRouter.post('/requestcall',requestCall)
 UserRouter.get('/getAllUsers',getAllUsers )
 UserRouter.get('/getHealthcareUsers',getHealthcareUsers )
 UserRouter.patch('/updateProfile',updateProfile)
+
 UserRouter.post('/reset-password',sendPasswordLink)
 
 UserRouter.get('/forgotpassword/:id/:token',forgotpassword)
