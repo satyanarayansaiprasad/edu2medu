@@ -22,15 +22,14 @@ const AdminResetPassword = () => {
             return toast.warning("Please include @ in your email!", { position: "top-center" });
         }
 
+        
         try {
-            const response = await axios.post(
-                `${import.meta.env.VITE_BASEURI}/admin/admin-forgotpassword`,
-                { email }, // Data to send in the request body
-                {
-                    headers: { "Content-Type": "application/json" }, // Headers
-                    withCredentials: true, // Include credentials (cookies)
-                }
-            ); 
+            const response = await fetch(`${import.meta.env.VITE_BASEURI}/admin/admin-resetpassword`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                withCredentials: true,
+                body: JSON.stringify({ email }),
+            });
 
             console.log("Response:", response.data);
 

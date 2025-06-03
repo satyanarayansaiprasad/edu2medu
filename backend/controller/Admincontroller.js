@@ -480,7 +480,7 @@ exports.sendPasswordLink = async (req, res) => {
 
     // Send the reset link
     const frontendUrl = process.env.FRONTEND_URL || "https://edu2medu.com";
-    const resetLink = `${frontendUrl}/admin-forgotpassword/${admin._id}/${token}`;
+    const resetLink = `${frontendUrl}/admin-resetpassword/${admin._id}/${token}`;
     
     const transporter = nodemailer.createTransport({
       service: "gmail",
