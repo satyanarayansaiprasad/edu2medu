@@ -10,15 +10,11 @@ const responsive = {
   mobile: { breakpoint: { max: 464, min: 0 }, items: 1, slidesToSlide: 1 },
 };
 
-const categories = [
-  'Hospital',
-  'Private Clinic',
-  'Medical Stores',
-];
+const categories = ['Hospital', 'Private Clinic', 'Medical Stores'];
 
 function MedicalCl() {
   const [usersByCategory, setUsersByCategory] = useState({});
-  const [loading, setLoading] = useState(true); // Loading state for skeleton
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,12 +34,11 @@ function MedicalCl() {
         }
       })
       .catch((error) => console.error('Error fetching categories:', error))
-      .finally(() => setLoading(false)); // Set loading to false after fetching
+      .finally(() => setLoading(false));
   }, []);
 
-  // Skeleton Loading Component
   const renderSkeleton = () => (
-   <div className="mt-20 sm:mt-24 md:mt-28 lg:mt-30 xl:mt-32">
+    <div className="mt-20 sm:mt-24 md:mt-28 lg:mt-30 xl:mt-32">
       <header className="mb-6 px-6 md:px-16">
         <h1 className="text-3xl font-extrabold text-gray-900 border-l-4 border-blue-500 pl-4 animate-pulse">
           Loading...
@@ -79,7 +74,9 @@ function MedicalCl() {
   const renderCarousel = (title, users) => (
     <div key={title} className="mt-20 sm:mt-24 md:mt-28 lg:mt-30 xl:mt-40">
       <header className="mb-6 px-6 md:px-16">
-        <h1 className="text-3xl font-extrabold text-gray-900 border-l-4 border-blue-500 pl-4">{title}</h1>
+        <h1 className="text-3xl font-extrabold text-gray-900 border-l-4 border-blue-500 pl-4">
+          {title}
+        </h1>
       </header>
       <main className="px-6 md:px-16">
         {users.length === 0 ? (
@@ -102,13 +99,19 @@ function MedicalCl() {
                 onClick={() => navigate(`/medicalcategory/${user.category}`)}
               >
                 <img
-                  src={user.image}
+                  src={user.image || '/placeholder.svg?height=400&width=800'}
                   alt={user.name}
                   className="w-full h-64 object-cover rounded-t-xl"
-                  loading="lazy" // Lazy loading for images
+                  loading="lazy"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/placeholder.svg?height=400&width=800';
+                  }}
                 />
                 <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-gray-900 via-gray-800 to-transparent">
-                  <h2 className="text-lg font-semibold text-white">{user.name || 'No Name Found'}</h2>
+                  <h2 className="text-lg font-semibold text-white">
+                    {user.name || 'No Name Found'}
+                  </h2>
                 </div>
               </div>
             ))}
@@ -122,7 +125,9 @@ function MedicalCl() {
     <>
       {loading
         ? categories.map((category) => renderSkeleton(category))
-        : categories.map((category) => renderCarousel(category, usersByCategory[category] || []))}
+        : categories.map((category) =>
+            renderCarousel(category, usersByCategory[category] || [])
+          )}
     </>
   );
 }
