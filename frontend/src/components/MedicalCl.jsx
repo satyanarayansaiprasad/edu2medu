@@ -43,7 +43,7 @@ function MedicalCl() {
 
   // Skeleton Loading Component
   const renderSkeleton = () => (
-    <div className="bg-gray-50 py-12 mt-50 ">
+   <div className="mt-20 sm:mt-24 md:mt-28 lg:mt-30 xl:mt-32">
       <header className="mb-6 px-6 md:px-16">
         <h1 className="text-3xl font-extrabold text-gray-900 border-l-4 border-blue-500 pl-4 animate-pulse">
           Loading...
