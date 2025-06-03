@@ -479,8 +479,8 @@ exports.sendPasswordLink = async (req, res) => {
     console.log("✅ Token updated in DB:", admin.verifytoken);
 
     // Send the reset link
-    const frontendUrl = process.env.FRONTEND_URL || "https://edu2medu.vercel.app";
-    const resetLink = `${frontendUrl}/admin-forgotpassword/${admin._id}/${token}`;
+    const frontendUrl = process.env.FRONTEND_URL || "https://edu2medu.com";
+    const resetLink = `${frontendUrl}/admin-resetpassword/${admin._id}/${token}`;
     
     const transporter = nodemailer.createTransport({
       service: "gmail",
