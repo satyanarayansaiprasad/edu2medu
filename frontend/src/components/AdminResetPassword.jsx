@@ -30,7 +30,7 @@ const AdminResetPassword = () => {
                     headers: { "Content-Type": "application/json" }, // Headers
                     withCredentials: true, // Include credentials (cookies)
                 }
-            );
+            ); 
 
             console.log("Response:", response.data);
 
