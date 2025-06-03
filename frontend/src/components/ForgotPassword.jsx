@@ -22,7 +22,7 @@ const ForgotPassword = () => {
   // Validate the token and user ID
   const validateToken = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_BASEURI}/user/userforgotpassword/${id}/${token}`, {
+      const res = await fetch(`${import.meta.env.VITE_BASEURI}/user/forgotpassword/${id}/${token}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
