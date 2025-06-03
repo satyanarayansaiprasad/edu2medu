@@ -1,80 +1,34 @@
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import { useNavigate } from "react-router-dom";
 
-const responsive = {
-  desktop: { breakpoint: { max: 3000, min: 1024 }, items: 3, slidesToSlide: 1 },
-  tablet: { breakpoint: { max: 1024, min: 464 }, items: 2, slidesToSlide: 1 },
-  mobile: { breakpoint: { max: 464, min: 0 }, items: 1, slidesToSlide: 1 },
-};
-
-const categories = ['Hospital', 'Private Clinic', 'Medical Stores'];
-
-function MedicalCl() {
-  const [usersByCategory, setUsersByCategory] = useState({});
-  const [loading, setLoading] = useState(true);
+const MedicalCl = ({ medicalCategory }) => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASEURI}/user/getHealthcareUsers`)
-      .then((response) => {
-        if (response.data.success && Array.isArray(response.data.users)) {
-          const categorizedUsers = {};
-          categories.forEach((category) => {
-            categorizedUsers[category] = response.data.users.filter(
-              (user) => user.category === category && user.status === 'active'
-            );
-          });
-          setUsersByCategory(categorizedUsers);
-        } else {
-          console.error('Invalid API response format:', response.data);
-        }
-      })
-      .catch((error) => console.error('Error fetching categories:', error))
-      .finally(() => setLoading(false));
-  }, []);
-
-  const renderSkeleton = () => (
-    <div className="mt-20 sm:mt-24 md:mt-28 lg:mt-30 xl:mt-32 mb-10">
-      <header className="mb-6 px-6 md:px-16">
-        <h1 className="text-3xl font-extrabold text-gray-900 border-l-4 border-blue-500 pl-4 animate-pulse">
-          Loading...
-        </h1>
-      </header>
-      <main className="px-6 md:px-16">
-        <Carousel
-          responsive={responsive}
-          infinite={true}
-          autoPlay={true}
-          autoPlaySpeed={3000}
-          showDots={false}
-          arrows={false}
-          containerClass="carousel-container"
-          itemClass="carousel-item px-4"
-        >
-          {[...Array(3)].map((_, index) => (
-            <div
-              key={index}
-              className="relative bg-white rounded-xl shadow-lg transform transition duration-300 hover:scale-105 cursor-pointer overflow-hidden animate-pulse"
-            >
-              <div className="w-full h-64 bg-gray-300 rounded-t-xl"></div>
-              <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-gray-900 via-gray-800 to-transparent">
-                <div className="h-6 bg-gray-400 rounded w-3/4"></div>
-              </div>
-            </div>
-          ))}
-        </Carousel>
-      </main>
-    </div>
-  );
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 1600 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 1600, min: 1024 },
+      items: 4,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 640 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 640, min: 0 },
+      items: 1,
+    },
+  };
 
   const renderCarousel = (title, users) => (
     <div key={title} className="mt-20 sm:mt-24 md:mt-28 lg:mt-30 xl:mt-40">
       <header className="mb-6 px-6 md:px-16">
-        <h1 className="text-3xl font-extrabold text-gray-900 border-l-4 border-blue-500 pl-4">
+        <h1 className="text-3xl font-extrabold text-gray-900 border-l-4 border-cyan-500 pl-4">
           {title}
         </h1>
       </header>
@@ -95,23 +49,36 @@ function MedicalCl() {
             {users.map((user) => (
               <div
                 key={user._id}
-                className="relative bg-white rounded-xl shadow-lg transform transition duration-300 hover:scale-105 cursor-pointer overflow-hidden"
-                onClick={() => navigate(`/medicalcategory/${user.category}`)}
+                className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 transform transition duration-300 hover:scale-105 cursor-pointer relative"
+                onClick={() =>
+                  navigate(`/medicalcategory/${user.category}`, {
+                    state: { user },
+                  })
+                }
               >
-                <img
-                  src={user.image || '/placeholder.svg?height=400&width=800'}
-                  alt={user.name}
-                  className="w-full h-64 object-cover rounded-t-xl"
-                  loading="lazy"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = '/placeholder.svg?height=400&width=800';
-                  }}
-                />
-                <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-gray-900 via-gray-800 to-transparent">
-                  <h2 className="text-lg font-semibold text-white">
-                    {user.name || 'No Name Found'}
+                {/* Image */}
+                <div className="relative w-full h-60 overflow-hidden">
+                  <img
+                    src={user.image || "/placeholder.svg?height=400&width=800"}
+                    alt={user.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) =>
+                      (e.target.src = "/placeholder.svg?height=400&width=800")
+                    }
+                  />
+                </div>
+
+                {/* Content */}
+                <div className="bg-gradient-to-r from-teal-50 to-cyan-50 p-4 rounded-b-3xl text-center">
+                  <h2 className="text-xl font-bold text-teal-700">
+                    {user.name}
                   </h2>
+                  <p className="text-sm text-gray-600">
+                    {user.ctitle || user.category}
+                  </p>
+                  <p className="text-gray-700 mt-2 truncate">
+                    {user.address || "No address available"}
+                  </p>
                 </div>
               </div>
             ))}
@@ -122,14 +89,12 @@ function MedicalCl() {
   );
 
   return (
-    <>
-      {loading
-        ? categories.map((category) => renderSkeleton(category))
-        : categories.map((category) =>
-            renderCarousel(category, usersByCategory[category] || [])
-          )}
-    </>
+    <div className="py-12 bg-white">
+      {Object.entries(medicalCategory).map(([categoryTitle, users]) =>
+        renderCarousel(categoryTitle, users)
+      )}
+    </div>
   );
-}
+};
 
 export default MedicalCl;
