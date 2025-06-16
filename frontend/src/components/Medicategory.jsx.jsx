@@ -24,7 +24,7 @@ const Medicategory = () => {
           );
           setUsers(filteredUsers);
         } else {
-          setError("No active healthcare providers found in this category.");
+          setUsers([]); // Ensure users is empty if no data
         }
       })
       .catch((error) => {
@@ -79,20 +79,23 @@ const Medicategory = () => {
               <p className="text-gray-600 text-sm mt-1">
                 {user.ctitle || "No Description Available"}
               </p>
-              {user.status && (
-                <span className={`text-xs px-2 py-1 rounded-full mt-2 ${
-                  user.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                }`}>
-                  {user.status}
-                </span>
-              )}
             </motion.div>
           ))
         ) : (
           !loading && (
-            <p className="text-center text-gray-600 col-span-full">
-              No active healthcare providers available in this category currently.
-            </p>
+            <div className="col-span-full text-center py-12">
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="text-2xl text-gray-600 font-medium"
+              >
+                Coming Soon...
+              </motion.p>
+              <p className="text-gray-500 mt-2">
+                We're working on adding {categoryName} providers soon.
+              </p>
+            </div>
           )
         )}
       </div>
