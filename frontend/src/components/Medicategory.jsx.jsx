@@ -12,90 +12,125 @@ const Medicategory = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setError(null);
-    setLoading(true);
+    const fetchActiveUsers = async () => {
+      setError(null);
+      setLoading(true);
+      
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BASEURI}/user/getHealthcareUsers`
+        );
 
-    axios
-      .get(`${import.meta.env.VITE_BASEURI}/user/getHealthcareUsers`)
-      .then((response) => {
         if (response.data?.users && Array.isArray(response.data.users)) {
-          const filteredUsers = response.data.users.filter(
-            (user) => user.category === categoryName && user.status === 'active'
+          // Strict filtering - only show 'active' status users
+          const activeUsers = response.data.users.filter(
+            (user) => 
+              user.category === categoryName && 
+              user.status === 'active' // exact match with enum value
           );
-          setUsers(filteredUsers);
+          
+          console.log("Active Users:", activeUsers); // Debug log
+          setUsers(activeUsers);
         } else {
-          setUsers([]); // Ensure users is empty if no data
+          setError("Invalid data format received");
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching users:", error);
-        setError("Failed to load data. Please try again later.");
-      })
-      .finally(() => {
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setError("Failed to load healthcare providers");
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchActiveUsers();
   }, [categoryName]);
 
   return (
-    <div className="bg-gradient-to-br from-teal-50 via-cyan-70 to-sky-50 lg:mt-32 md:mt-22 min-h-screen py-10 px-8">
+    <div className="bg-gradient-to-br from-teal-50 via-cyan-70 to-sky-50 min-h-screen py-10 px-8">
+      {/* Back Button */}
       <motion.button
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3 }}
-        className="hidden lg:flex fixed mt-20 sm:mt-24 md:mt-28 lg:mt-30 xl:mt-32 top-4 left-4 z-50 items-center gap-2 px-4 py-2 bg-[#17A2B8] text-gray-200 rounded-full shadow-md hover:shadow-lg transition duration-300"
+        className="fixed top-4 left-4 z-50 flex items-center gap-2 px-4 py-2 bg-[#17A2B8] text-white rounded-full shadow-md hover:shadow-lg"
         onClick={() => navigate("/healthcare")}
       >
         <FaArrowLeft />
         <span>Back to List</span>
       </motion.button>
 
-      <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">
+      {/* Category Title */}
+      <h2 className="text-3xl font-bold text-gray-800 text-center mb-8 pt-4">
         {categoryName}
       </h2>
 
-      {loading && <p className="text-center text-gray-600">Loading...</p>}
-      {error && <p className="text-center text-red-600">{error}</p>}
+      {/* Status Messages */}
+      {loading && (
+        <p className="text-center text-gray-600 animate-pulse">Loading providers...</p>
+      )}
+      
+      {error && (
+        <p className="text-center text-red-500 bg-red-50 p-3 rounded-lg max-w-md mx-auto">
+          {error}
+        </p>
+      )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Users Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
         {!loading && users.length > 0 ? (
-          users.map((user, index) => (
+          users.map((user) => (
             <motion.div
-              key={user._id || index}
+              key={user._id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-              className="bg-white shadow-md rounded-md p-4 hover:shadow-lg transition-transform transform hover:scale-105 cursor-pointer"
-              onClick={() => navigate("/medu-details", { state: { user } })}
+              transition={{ duration: 0.3 }}
+              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
+              onClick={() => navigate(`/medu-details`, { state: { user } })}
             >
-              <img
-                src={user.image || "/default-image.jpg"}
-                alt={user.name}
-                className="w-full h-40 object-cover rounded-t-md"
-                onError={(e) => (e.target.src = "/default-image.jpg")}
-              />
-              <h2 className="text-lg font-bold text-gray-800 mt-3">
-                {user.name || "No Name Available"}
-              </h2>
-              <p className="text-gray-600 text-sm mt-1">
-                {user.ctitle || "No Description Available"}
-              </p>
+              {/* User Image */}
+              <div className="h-48 overflow-hidden">
+                <img
+                  src={user.image || "/default-healthcare.jpg"}
+                  alt={user.name}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.src = "/default-healthcare.jpg";
+                  }}
+                />
+              </div>
+
+              {/* User Info */}
+              <div className="p-4">
+                <h3 className="font-bold text-lg text-gray-800 truncate">
+                  {user.name || "Healthcare Provider"}
+                </h3>
+                <p className="text-gray-600 text-sm mt-1">
+                  {user.ctitle || "Specialist"}
+                </p>
+                
+                {/* Status Badge */}
+                <div className="mt-3">
+                  <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                    {user.status || "active"}
+                  </span>
+                </div>
+              </div>
             </motion.div>
           ))
         ) : (
           !loading && (
-            <div className="col-span-full text-center py-12">
-              <motion.p 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="text-2xl text-gray-600 font-medium"
-              >
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="col-span-full text-center py-12"
+            >
+              <p className="text-2xl font-medium text-gray-600">
                 Coming Soon...
-              </motion.p>
-              <p className="text-gray-500 mt-2">
-                We're working on adding {categoryName} providers soon.
               </p>
-            </div>
+              <p className="text-gray-500 mt-2">
+                We're currently onboarding {categoryName} specialists.
+              </p>
+            </motion.div>
           )
         )}
       </div>
