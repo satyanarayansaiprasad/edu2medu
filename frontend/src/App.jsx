@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import Marque from "./components/Marque";
-import Statistics from "./components/Statistics";
+// import Statistics from "./components/Statistics";
 import BoardingSchool from "./components/EducationList";
 import DaySchool from "./components/DaySchool";
 import PreSchool from "./components/PreSchool";
