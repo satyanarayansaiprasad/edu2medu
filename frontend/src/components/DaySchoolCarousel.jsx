@@ -90,7 +90,7 @@ function DaySchoolCarousel() {
       </header>
       <main className="px-2 md:px-4 lg:px-8">
         {users.length === 0 ? (
-          <p className="text-center text-lg text-gray-500">Coming Soon</p>
+          <p className="text-center text-lg text-gray-500">Coming Soon...</p>
         ) : (
           <Carousel
             responsive={responsive}
