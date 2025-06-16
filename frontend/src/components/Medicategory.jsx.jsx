@@ -17,7 +17,7 @@ const Medicategory = () => {
       .then((response) => {
         if (response.data && Array.isArray(response.data.users)) {
           const filteredUsers = response.data.users.filter(
-            (user) => user.category === categoryName
+            (user) => user.category === categoryName && user.status === 'active'
           );
           setUsers(filteredUsers);
         } else {
