@@ -50,13 +50,13 @@ const Category = () => {
       imgSrc: "india.jpg",
       title: "Pan India Presence",
       description:
-        "Whether you're in a metro city or a small town, Edustoke ensures that schools from every region of India are included, giving you a wide selection of educational institutions to choose from.",
+        "Whether you're in a metro city or a small town, Edu2Medu ensures that schools from every region of India are included, giving you a wide selection of educational institutions to choose from.",
     },
     {
       imgSrc: "edu.jpg",
       title: "All Boards",
       description:
-        "Be it CBSE, ICSE, IB or state boards, Edustoke has listed schools with their diverse approaches and curriculum for parents to choose.",
+        "Be it CBSE, ICSE, IB or state boards, Edu2Medu has listed schools with their diverse approaches and curriculum for parents to choose.",
     },
     {
       imgSrc: "team3.jpg",
@@ -68,7 +68,7 @@ const Category = () => {
       imgSrc: "cap.webp",
       title: "From Play School to Pre-University",
       description:
-        "Edustoke as a platform, caters to all parents be it seeking admission in preschool, day-school, boarding school or even pre-universities.",
+        "Edu2Medu as a platform, caters to all parents be it seeking admission in preschool, day-school, boarding school or even pre-universities.",
     },
   ];
 
