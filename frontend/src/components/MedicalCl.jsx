@@ -83,7 +83,7 @@ function MedicalCl() {
       </header>
       <main className="px-6 md:px-16">
         {users.length === 0 ? (
-          <p className="text-center text-lg text-gray-500">No users found</p>
+          <p className="text-center text-lg text-gray-500">Coming Soon</p>
         ) : (
           <Carousel
             responsive={responsive}
