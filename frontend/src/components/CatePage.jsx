@@ -15,7 +15,7 @@ const CatePage = () => {
       .then((response) => {
         if (response.data && Array.isArray(response.data.users)) {
           const filteredusers = response.data.users.filter(
-            (user) => user.category === categoryName && !user.block // Add this condition to filter out blocked users
+            (user) => user.category === categoryName && !user.blocked // Add this condition to filter out blocked users
           );
           setusers(filteredusers);
         } else {
