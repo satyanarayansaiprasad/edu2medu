@@ -15,7 +15,7 @@ const CatePage = () => {
       .then((response) => {
         if (response.data && Array.isArray(response.data.users)) {
           const filteredusers = response.data.users.filter(
-            (user) => user.category === categoryName && !user.blocked // Add this condition to filter out blocked users
+            (user) => user.category === categoryName && user.status === 'active'
           );
           setusers(filteredusers);
         } else {
@@ -50,7 +50,7 @@ const CatePage = () => {
             <div
               key={index}
               className="bg-white shadow-md rounded-md p-4 hover:shadow-lg transition-transform transform hover:scale-105 cursor-pointer"
-              onClick={() => navigate("/schools", { state: { user } })}  // ✅ FIXED: Correct navigation
+              onClick={() => navigate("/schools", { state: { user } })}
             >
               <img
                 src={user.image || "/default-image.jpg"}
