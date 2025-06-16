@@ -7,7 +7,7 @@ import Header from "./components/Header";
 import Home from "./components/Home";
 import Marque from "./components/Marque";
 // import Statistics from "./components/Statistics";
-import BoardingSchool from "./components/EducationList";
+// import BoardingSchool from "./components/EducationList";
 import DaySchool from "./components/DaySchool";
 import PreSchool from "./components/PreSchool";
 import Login from "./components/Login";
@@ -130,7 +130,7 @@ function App() {
           path="/board-school"
           element={
             <MainLayout>
-              <BoardingSchool />
+              {/* <BoardingSchool /> */}
             </MainLayout>
           }
         />
