@@ -67,7 +67,7 @@ const CatePage = () => {
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-600">No users found in this category.</p>
+          <p className="text-center text-gray-600">Coming Soon... in this category.</p>
         )}
       </div>
     </div>

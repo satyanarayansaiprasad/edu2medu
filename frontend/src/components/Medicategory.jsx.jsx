@@ -72,7 +72,7 @@ const Medicategory = () => {
           ))
         ) : (
           <p className="text-center text-gray-600">
-            Coming Soon in this category.
+            Coming Soon...in this category.
           </p>
         )}
       </div>
