@@ -56,7 +56,7 @@ const Medicategory = () => {
         onClick={() => navigate("/healthcare")}
       >
         <FaArrowLeft />
-        <span>Back to List</span>
+        <span>Back</span>
       </motion.button>
 
       {/* Category Title */}
