@@ -13,7 +13,7 @@ import PreSchool from "./components/PreSchool";
 import Login from "./components/Login";
 import HMarque from "./components/HMarque";
 import HCategory from "./components/HCategory";
-import HStatistics from "./components/HStatistics";
+// import HStatistics from "./components/HStatistics";
 import HContact from "./components/HContact";
 import MedicalCl from "./components/MedicalCl";
 import DaySchoolM from "./components/DaySchoolM";
@@ -74,7 +74,7 @@ function App() {
               <HCategory />
               <MedicalCl />
               <Contact />
-              <HStatistics />
+              {/* <HStatistics /> */}
             </MainLayout>
           }
         />
