@@ -52,7 +52,7 @@ const Medicategory = () => {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3 }}
-        className="fixed top-4 left-4 z-50 flex items-center gap-2 px-4 py-2 bg-[#17A2B8] text-white rounded-full shadow-md hover:shadow-lg"
+        className="fixed top-4 mt-30 left-4 z-50 flex items-center gap-2 px-4 py-2 bg-[#17A2B8] text-white rounded-full shadow-md hover:shadow-lg"
         onClick={() => navigate("/healthcare")}
       >
         <FaArrowLeft />
