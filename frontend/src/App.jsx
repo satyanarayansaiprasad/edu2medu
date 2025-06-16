@@ -59,7 +59,7 @@ function App() {
               <Category />
               <DaySchoolCarousel />
               <Contact />
-              {/* <Statistics /> */}
+             
             </MainLayout>
           }
         />
@@ -74,7 +74,7 @@ function App() {
               <HCategory />
               <MedicalCl />
               <Contact />
-              {/* <HStatistics /> */}
+             
             </MainLayout>
           }
         />
