@@ -59,7 +59,7 @@ function App() {
               <Category />
               <DaySchoolCarousel />
               <Contact />
-              <Statistics />
+              {/* <Statistics /> */}
             </MainLayout>
           }
         />
