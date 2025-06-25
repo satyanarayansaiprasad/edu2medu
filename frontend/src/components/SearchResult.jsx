@@ -42,10 +42,10 @@ const SearchResult = () => {
                 alt={user.name}
                 className="w-full h-64 object-cover"
                 loading="lazy"
-                onError={(e) => {
-                  e.target.src = "/default-image.png";
-                  e.target.onerror = null; // Prevent infinite loop
-                }}
+                // onError={(e) => {
+                //   e.target.src = "/default-image.png";
+                //   e.target.onerror = null; // Prevent infinite loop
+                // }}
               />
               {/* User Details */}
               <div className="p-4">
