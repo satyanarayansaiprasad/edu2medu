@@ -46,8 +46,14 @@ const handleSearch = async () => {
     });
 
     if (response.status === 200) {
+      // Filter results to only show active users
+      const activeResults = response.data.filter(user => user.status === 'active');
+      
       navigate("/search-results", {
-        state: { searchResults: response.data, selectedCategory },
+        state: { 
+          searchResults: activeResults, 
+          selectedCategory 
+        },
       });
     }
   } catch (error) {
