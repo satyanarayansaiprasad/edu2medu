@@ -762,7 +762,7 @@ export default function UserDashboard() {
               <User className="w-5 h-5 mr-3" /> Update Profile
             </li>
             <li
-  className={`flex items-center p-3 rounded-lg text-white hover:text-gray-900 cursor-pointer transition duration-300 hover:bg-gray-300 ${activeTab === "postJob" ? "bg-gray-300" : ""}`}
+  className={`flex items-center p-3 rounded-lg text-white hover:text-gray-900 cursor-pointer transition duration-300 hover:bg-gray-300 ${activeTab === "postJob" ? "bg-gray-300  text-black" : "text-white"}`}
   onClick={() => { setActiveTab("postJob"); setIsSidebarOpen(false); }}
 >
   <Edit3 className="w-5 h-5 mr-3" /> Post a Job
@@ -774,7 +774,7 @@ export default function UserDashboard() {
               <Activity className="w-5 h-5 mr-3" /> Status
             </li> */}
             <li
-              className={`flex items-center p-3 rounded-lg hover:text-gray-900  cursor-pointer text-white transition duration-300 hover:bg-gray-300 ${activeTab === "support" ? "bg-gray-300" : ""}`}
+              className={`flex items-center p-3 rounded-lg hover:text-gray-900  cursor-pointer text-white transition duration-300 hover:bg-gray-300 ${activeTab === "support" ? "bg-gray-300  text-black" : "text-white"}`}
               onClick={() => { setActiveTab("support"); setIsSidebarOpen(false); }}
             >
               <HelpCircle className="w-5 h-5 mr-3" /> Support
