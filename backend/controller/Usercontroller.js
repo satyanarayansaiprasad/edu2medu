@@ -232,7 +232,8 @@ exports.getAllUsers = async (req, res) => {
     // ✅ Corrected mapping of user data to include full image URL
     const updatedUsers = users.map((item) => ({
       ...item._doc,
-      image: item.image ? `${baseUrl}${item.image}` : "/default-image.png",
+      // In the backend, ensure the default image URL is also complete
+image: item.image ? `${baseUrl}${item.image}` : `${baseUrl}/default-image.png`,
     }));
 
     // ✅ Send the updated users list

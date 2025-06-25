@@ -110,11 +110,12 @@ function DaySchoolCarousel() {
               >
                 <div className="relative h-full">
                   <img
-                    src={user.image}
-                    alt={user.name}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+  src={user.image}
+  alt={user.name}
+  className="w-full h-full object-cover"
+  loading="lazy"
+  decoding="async"  /* Prevents blocking the main thread */
+/>
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
                   <div className="absolute bottom-0 left-0 w-full p-4">
                     <h2 className="text-lg md:text-xl font-bold text-white">
