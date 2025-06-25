@@ -112,12 +112,11 @@ const SchoolDetail = () => {
                   }}
                   initial="hidden"
                   animate={isLoaded ? "visible" : "hidden"}
-                  src={user.image || "/placeholder.svg?height=400&width=800"}
+                  src={user.image}
                   alt={user.name}
                   className="w-full h-full object-cover"
-                  onError={(e) =>
-                    (e.target.src = "/placeholder.svg?height=400&width=800")
-                  }
+                 loading="lazy"
+  decoding="async"
                 />
               </div>
 
