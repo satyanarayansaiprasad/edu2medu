@@ -26,37 +26,46 @@ const Home = () => {
     setSelectedOption("");
     navigate(category === "Education" ? "/" : "/healthcare");
   };
+const handleSearch = async () => {
+  if (!searchQuery.trim()) {
+    setError("Please enter a search term.");
+    return;
+  }
 
-  const handleSearch = async () => {
-    if (!searchQuery.trim()) {
-      setError("Please enter a search term.");
-      return;
-    }
+  setLoading(true);
+  setError(null);
 
-    setLoading(true);
-    setError(null);
+  try {
+    const endpoint =
+      selectedCategory === "Education"
+        ? `${import.meta.env.VITE_BASEURI}/user/searchEducation`
+        : `${import.meta.env.VITE_BASEURI}/user/searchHealthcare`;
 
-    try {
-      const endpoint =
-        selectedCategory === "Education"
-          ? `${import.meta.env.VITE_BASEURI}/user/searchEducation`
-          : `${import.meta.env.VITE_BASEURI}/user/searchHealthcare`;
+    const response = await axios.get(endpoint, {
+      params: { query: searchQuery },
+    });
 
-      const response = await axios.get(endpoint, {
-        params: { query: searchQuery },
-      });
-
+    if (response.status === 200) {
       navigate("/search-results", {
         state: { searchResults: response.data, selectedCategory },
       });
-    } catch (error) {
-      setError(
-        error.response?.data?.message || "An error occurred while searching. Please try again."
-      );
-    } finally {
-      setLoading(false);
     }
-  };
+  } catch (error) {
+    if (error.response) {
+      // Server responded with a status code outside 2xx
+      setError(error.response.data?.message || "Server error occurred");
+    } else if (error.request) {
+      // Request was made but no response received
+      setError("Network error. Please check your connection.");
+    } else {
+      // Something happened in setting up the request
+      setError("An unexpected error occurred.");
+    }
+    console.error("Search error:", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const educationOptions = [
     "Day School",

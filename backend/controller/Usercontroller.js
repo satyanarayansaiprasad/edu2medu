@@ -571,11 +571,11 @@ exports.searchEducation = async (req, res) => {
     }
 
     // Add full image URL to each user
-    const usersWithImageUrls = results.map(user => ({
-      ...user._doc,
-     // In the backend, ensure the default image URL is also complete
-image: item.image ? `${baseUrl}${item.image}` : `${baseUrl}/default-image.png`,
-    }));
+// Corrected version in both searchEducation and searchHealthcare
+const usersWithImageUrls = results.map(user => ({
+  ...user._doc,
+  image: user.image ? `${baseUrl}${user.image}` : `${baseUrl}/default-image.png`,
+}));
 
     res.status(200).json(usersWithImageUrls);
   } catch (error) {
@@ -603,11 +603,11 @@ exports.searchHealthcare = async (req, res) => {
     }
 
     // Add full image URL to each user
-    const usersWithImageUrls = results.map(user => ({
-      ...user._doc,
-   // In the backend, ensure the default image URL is also complete
-image: item.image ? `${baseUrl}${item.image}` : `${baseUrl}/default-image.png`,
-    }));
+// Corrected version in both searchEducation and searchHealthcare
+const usersWithImageUrls = results.map(user => ({
+  ...user._doc,
+  image: user.image ? `${baseUrl}${user.image}` : `${baseUrl}/default-image.png`,
+}));
 
     res.status(200).json(usersWithImageUrls);
   } catch (error) {
