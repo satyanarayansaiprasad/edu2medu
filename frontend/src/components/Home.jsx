@@ -12,6 +12,8 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
     if (location.pathname.includes("/healthcare")) {
@@ -21,9 +23,45 @@ const Home = () => {
     }
   }, [location.pathname]);
 
+  // Fetch active user suggestions based on search query
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (searchQuery.trim().length < 2) {
+        setSuggestions([]);
+        return;
+      }
+
+      try {
+        const endpoint =
+          selectedCategory === "Education"
+            ? `${import.meta.env.VITE_BASEURI}/user/searchEducation`
+            : `${import.meta.env.VITE_BASEURI}/user/searchHealthcare`;
+
+        const response = await axios.get(endpoint, {
+          params: { query: searchQuery, limit: 5 } // Limit to 5 suggestions
+        });
+
+        // Filter only active users
+        const activeUsers = response.data.filter(user => user.status === 'active');
+        setSuggestions(activeUsers);
+      } catch (error) {
+        console.error("Error fetching suggestions:", error);
+        setSuggestions([]);
+      }
+    };
+
+    const debounceTimer = setTimeout(() => {
+      fetchSuggestions();
+    }, 300); // Debounce to avoid too many requests
+
+    return () => clearTimeout(debounceTimer);
+  }, [searchQuery, selectedCategory]);
+
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setSelectedOption("");
+    setSearchQuery("");
+    setSuggestions([]);
     navigate(category === "Education" ? "/" : "/healthcare");
   };
 
@@ -35,6 +73,7 @@ const Home = () => {
 
     setLoading(true);
     setError(null);
+    setShowSuggestions(false);
 
     try {
       const endpoint =
@@ -46,8 +85,11 @@ const Home = () => {
         params: { query: searchQuery },
       });
 
+      // Filter only active users
+      const activeUsers = response.data.filter(user => user.status === 'active');
+
       navigate("/search-results", {
-        state: { searchResults: response.data, selectedCategory },
+        state: { searchResults: activeUsers, selectedCategory },
       });
     } catch (error) {
       setError(
@@ -56,6 +98,13 @@ const Home = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchQuery(suggestion.name);
+    setShowSuggestions(false);
+    // Optionally trigger search immediately when a suggestion is clicked
+    // handleSearch();
   };
 
   const educationOptions = [
@@ -126,7 +175,7 @@ const Home = () => {
         </span>
       </motion.h1>
 
-      {/* Search Bar */}
+      {/* Search Bar with Suggestions */}
       <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md mt-6 flex justify-center items-center">
         <div className="flex items-center w-full max-w-md relative">
           <SearchIcon
@@ -146,8 +195,13 @@ const Home = () => {
             }
             className="p-3 pl-10 pr-14 rounded-lg w-full text-sm sm:text-base placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-[#5e758e] shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setShowSuggestions(true);
+            }}
             onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+            onFocus={() => setShowSuggestions(true)}
+            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
           />
           <button
             className={`absolute right-1 top-1/2 transform -translate-y-1/2 ${
@@ -157,6 +211,22 @@ const Home = () => {
           >
             <SearchIcon className="w-5 h-5" />
           </button>
+
+          {/* Suggestions Dropdown */}
+          {showSuggestions && suggestions.length > 0 && (
+            <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg z-20 max-h-60 overflow-y-auto">
+              {suggestions.map((suggestion) => (
+                <div
+                  key={suggestion._id}
+                  className="p-3 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
+                  <div className="font-medium text-gray-800">{suggestion.name}</div>
+                  <div className="text-sm text-gray-500">{suggestion.address}</div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
