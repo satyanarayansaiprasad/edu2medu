@@ -745,18 +745,18 @@ export default function UserDashboard() {
         className={`w-full md:w-64 bg-[#245876] p-6 flex flex-col justify-between transition-all duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 fixed md:relative z-50`}
       >
         <div>
-          <h2 className="text-xl font-semibold mb-6 text-center">
+          <h2 className="text-xl text-white font-semibold mb-6 text-center">
             Welcome <br /> {user?.name || "User"}
           </h2>
           <ul className="space-y-2">
             <li
-              className={`flex items-center p-3 rounded-lg text-white hover:text-gray-900 cursor-pointer transition duration-300 hover:bg-gray-200 ${activeTab === "dashboard" ? "bg-gray-300" : ""}`}
+              className={`flex items-center p-3 rounded-lg text-white hover:text-gray-900 cursor-pointer transition duration-300 hover:bg-gray-200 ${activeTab === "dashboard" ? "bg-gray-300  text-black" : ""}`}
               onClick={() => { setActiveTab("dashboard"); setIsSidebarOpen(false); }}
             >
               <Home className="w-5 h-5 mr-3" /> Dashboard
             </li>
             <li
-              className={`flex items-center p-3 rounded-lg text-white hover:text-gray-900 cursor-pointer transition duration-300 hover:bg-gray-300 ${activeTab === "updateProfile" ? "bg-gray-300" : ""}`}
+              className={`flex items-center p-3 rounded-lg text-white hover:text-gray-900 cursor-pointer transition duration-300 hover:bg-gray-300 ${activeTab === "updateProfile" ? "bg-gray-300 text-black" : ""}`}
               onClick={() => { setActiveTab("updateProfile"); setIsSidebarOpen(false); }}
             >
               <User className="w-5 h-5 mr-3" /> Update Profile
