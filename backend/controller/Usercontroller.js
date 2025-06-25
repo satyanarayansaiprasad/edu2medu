@@ -289,6 +289,7 @@ const upload = multer({
       "image/gif",
       "image/webp",
       "image/avif",
+      "image/jpg"
     ];
     if (allowedTypes.includes(file.mimetype)) {
       cb(null, true);
@@ -551,15 +552,16 @@ exports.resetPassword = async (req, res) => {
 
 exports.searchEducation = async (req, res) => {
   const { query } = req.query;
+  const baseUrl = req.protocol + '://' + req.get('host'); // Construct base URL from request
 
   try {
     // Search for education-related users
     const results = await User.find({
-      userType: "education", // Filter by userType
+      userType: "education",
       $or: [
-        { name: { $regex: query, $options: "i" } }, // Case-insensitive name search
-        { category: { $regex: query, $options: "i" } }, // Case-insensitive category search
-        { address: { $regex: query, $options: "i" } }, // Case-insensitive address search
+        { name: { $regex: query, $options: "i" } },
+        { category: { $regex: query, $options: "i" } },
+        { address: { $regex: query, $options: "i" } },
       ],
     });
 
@@ -567,7 +569,13 @@ exports.searchEducation = async (req, res) => {
       return res.status(404).json({ message: "No education results found" });
     }
 
-    res.status(200).json(results);
+    // Add full image URL to each user
+    const usersWithImageUrls = results.map(user => ({
+      ...user._doc,
+      image: user.image ? `${baseUrl}${user.image}` : "/default-image.png"
+    }));
+
+    res.status(200).json(usersWithImageUrls);
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
@@ -575,15 +583,16 @@ exports.searchEducation = async (req, res) => {
 
 exports.searchHealthcare = async (req, res) => {
   const { query } = req.query;
+  const baseUrl = req.protocol + '://' + req.get('host'); // Construct base URL from request
 
   try {
     // Search for healthcare-related users
     const results = await User.find({
-      userType: "healthcare", // Filter by userType
+      userType: "healthcare",
       $or: [
-        { name: { $regex: query, $options: "i" } }, // Case-insensitive name search
-        { category: { $regex: query, $options: "i" } }, // Case-insensitive category search
-        { address: { $regex: query, $options: "i" } }, // Case-insensitive address search
+        { name: { $regex: query, $options: "i" } },
+        { category: { $regex: query, $options: "i" } },
+        { address: { $regex: query, $options: "i" } },
       ],
     });
 
@@ -591,7 +600,13 @@ exports.searchHealthcare = async (req, res) => {
       return res.status(404).json({ message: "No healthcare results found" });
     }
 
-    res.status(200).json(results);
+    // Add full image URL to each user
+    const usersWithImageUrls = results.map(user => ({
+      ...user._doc,
+      image: user.image ? `${baseUrl}${user.image}` : "/default-image.png"
+    }));
+
+    res.status(200).json(usersWithImageUrls);
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
