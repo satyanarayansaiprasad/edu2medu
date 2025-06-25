@@ -750,13 +750,13 @@ export default function UserDashboard() {
           </h2>
           <ul className="space-y-2">
             <li
-              className={`flex items-center p-3 rounded-lg text-white hover:text-gray-900 cursor-pointer transition duration-300 hover:bg-gray-200 ${activeTab === "dashboard" ? "bg-gray-300  text-black" : ""}`}
+              className={`flex items-center p-3 rounded-lg text-white hover:text-gray-900 cursor-pointer transition duration-300 hover:bg-gray-200 ${activeTab === "dashboard" ? "bg-gray-300 text-black" : "text-white"}`}
               onClick={() => { setActiveTab("dashboard"); setIsSidebarOpen(false); }}
             >
               <Home className="w-5 h-5 mr-3" /> Dashboard
             </li>
             <li
-              className={`flex items-center p-3 rounded-lg text-white hover:text-gray-900 cursor-pointer transition duration-300 hover:bg-gray-300 ${activeTab === "updateProfile" ? "bg-gray-300 text-black" : ""}`}
+              className={`flex items-center p-3 rounded-lg text-white hover:text-gray-900 cursor-pointer transition duration-300 hover:bg-gray-300 ${activeTab === "updateProfile" ? "bg-gray-300 text-black" : "text-white"}`}
               onClick={() => { setActiveTab("updateProfile"); setIsSidebarOpen(false); }}
             >
               <User className="w-5 h-5 mr-3" /> Update Profile
