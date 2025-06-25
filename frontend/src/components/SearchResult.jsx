@@ -34,12 +34,14 @@ const SearchResult = () => {
               onClick={() => navigate("/schools", { state: { user } })}
             >
               {/* User Image */}
-              <img
-                src={user.image || "/default-image.png"}
-                alt={user.name}
-                className="w-full h-40 object-cover rounded-t-md"
-             
-              />
+                  <img
+  src={user.image}
+  alt={user.name}
+  className="w-full h-full object-cover"
+  loading="lazy"
+  decoding="async"  /* Prevents blocking the main thread */
+/>
+        
               {/* User Name */}
               <h2 className="text-lg font-bold text-gray-800 mt-3">
                 {user.name || "No Name Available"}
