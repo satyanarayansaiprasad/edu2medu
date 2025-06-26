@@ -77,7 +77,7 @@ const SchoolDetail = () => {
   };
 
   return (
-    <div className="mt-16 sm:mt-20 md:mt-24 lg:mt-28 xl:mt-32">
+    <div className="mt-20 sm:mt-40 md:mt-24 lg:mt-28 xl:mt-32">
       {/* Mobile Back Button (fixed at top) */}
       <motion.button
         initial={{ opacity: 0 }}
