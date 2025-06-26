@@ -113,8 +113,9 @@ function DaySchoolCarousel() {
   src={user.image}
   alt={user.name}
   className="w-full h-full object-cover"
-  loading="lazy"
-  decoding="async"  /* Prevents blocking the main thread */
+  // loading="lazy"
+  // decoding="async"  
+   onError={(e) => (e.target.src = "/default-image.png")}/* Prevents blocking the main thread */
 />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
                   <div className="absolute bottom-0 left-0 w-full p-4">
