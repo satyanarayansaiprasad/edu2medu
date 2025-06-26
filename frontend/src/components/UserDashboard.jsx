@@ -36,7 +36,7 @@ export default function UserDashboard() {
     name: user?.name || "",
     address: user?.address || "",
     phone: user?.phone || "",
-    email: user?.email || "",
+    // email: user?.email || "",
     description: user?.description || "",
     contactInfo: user?.contactInfo || "",
     amenity: user?.amenity || "",
@@ -137,7 +137,7 @@ export default function UserDashboard() {
   
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("email", user.email);
+      // formDataToSend.append("email", user.email);
   
       Object.keys(formData).forEach((key) => {
         if (key !== "teachers" && formData[key]) {
@@ -298,7 +298,7 @@ export default function UserDashboard() {
             </div>
         
             {/* Email Input */}
-            <div className="flex items-center space-x-3">
+             {/* <div className="flex items-center space-x-3">
               <Mail className="w-6 h-6 text-purple-500" />
               <input
                 type="email"
@@ -308,7 +308,7 @@ export default function UserDashboard() {
                 placeholder="Change Email Address"
                 className="p-3 border border-gray-300 rounded-md w-full focus:ring-2 focus:ring-purple-500"
               />
-            </div>
+            </div> */}
         
             {/* Profile Picture Upload */}
             <div className="flex items-center space-x-3">
