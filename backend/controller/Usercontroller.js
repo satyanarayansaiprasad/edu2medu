@@ -312,9 +312,9 @@ exports.updateProfile = async (req, res) => {
     }
 
     try {
-      const userId = req.session.user.id;
-      if (!userId) {
-        return res.status(400).json({ success: false, message: "User not authenticated" });
+      const { email } = req.body;
+      if (!email) {
+        return res.status(400).json({ success: false, message: "Email is required" });
       }
 
       let updateFields = { ...req.body };
@@ -331,6 +331,8 @@ exports.updateProfile = async (req, res) => {
         }
       });
 
+      console.log("Fields to update:", updateFields);
+
       // Ensure `teachers` is correctly parsed if received as a string
       if (updateFields.teachers && typeof updateFields.teachers === "string") {
         try {
@@ -340,24 +342,12 @@ exports.updateProfile = async (req, res) => {
         }
       }
 
-      // Check for email change
-      if (updateFields.email && updateFields.email !== req.session.user.email) {
-        const emailExists = await User.findOne({ email: updateFields.email });
-        if (emailExists) {
-          return res.status(400).json({ success: false, message: "Email already in use" });
-        }
-      }
-
-      const updatedUser = await User.findByIdAndUpdate(
-        userId,
-        { $set: updateFields },
+      // Find and update the user by email
+      const updatedUser = await User.findOneAndUpdate(
+        { email }, 
+        { $set: updateFields }, 
         { new: true, runValidators: true }
-      ).catch(error => {
-        if (error.code === 11000) { // Duplicate key error
-          return res.status(400).json({ success: false, message: "Email already in use" });
-        }
-        throw error;
-      });
+      );
 
       if (!updatedUser) {
         return res.status(404).json({ success: false, message: "User not found" });
@@ -365,11 +355,11 @@ exports.updateProfile = async (req, res) => {
 
       // Update session with new user data
       req.session.user = {
-        ...req.session.user, // Keep existing session data
+        id: updatedUser._id,
         name: updatedUser.name,
         email: updatedUser.email,
         phone: updatedUser.phone,
-        // Don't update userType from request to prevent privilege escalation
+        userType: updatedUser.userType,
       };
 
       res.json({
@@ -379,11 +369,7 @@ exports.updateProfile = async (req, res) => {
       });
     } catch (error) {
       console.error("Error updating profile:", error);
-      res.status(500).json({ 
-        success: false, 
-        message: "Internal server error",
-        error: process.env.NODE_ENV === 'development' ? error.message : undefined
-      });
+      res.status(500).json({ success: false, message: "Internal server error" });
     }
   });
 };
