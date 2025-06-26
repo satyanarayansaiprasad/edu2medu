@@ -36,7 +36,7 @@ export default function UserDashboard() {
     name: user?.name || "",
     address: user?.address || "",
     phone: user?.phone || "",
-    // email: user?.email || "",
+    email: user?.email || "",
     description: user?.description || "",
     contactInfo: user?.contactInfo || "",
     amenity: user?.amenity || "",
@@ -125,43 +125,51 @@ export default function UserDashboard() {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setMessage("");
-
-  try {
-    const formDataToSend = new FormData();
-
-    Object.keys(formData).forEach((key) => {
-      if (key !== "teachers" && formData[key]) {
-        formDataToSend.append(key, formData[key]);
-      }
-    });
-
-    if (profilePicture) {
-      formDataToSend.append("image", profilePicture);
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+  
+    if (!user || !user.email) {
+      setMessage("Email is missing.");
+      setLoading(false);
+      return;
     }
-
-    if (Array.isArray(formData.teachers)) {
-      formDataToSend.append("teachers", JSON.stringify(formData.teachers));
-    }
-
-    const response = await axios.patch(
-      `${import.meta.env.VITE_BASEURI}/user/updateProfile`,
-      formDataToSend,
-      {
-        headers: { "Content-Type": "multipart/form-data" },
-        withCredentials: true,
+  
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("email", user.email);
+  
+      Object.keys(formData).forEach((key) => {
+        if (key !== "teachers" && formData[key]) {
+          formDataToSend.append(key, formData[key]);
+        }
+      });
+  
+      if (profilePicture) {
+        formDataToSend.append("image", profilePicture);
       }
-    );
-
-    setMessage(response.data.message);
-  } catch (error) {
-    setMessage(error.response?.data?.message || "Something went wrong");
-  } finally {
-    setLoading(false);
-  }
-};
+  
+      // Ensure teachers is a valid JSON string before appending
+      if (Array.isArray(formData.teachers)) {
+        formDataToSend.append("teachers", JSON.stringify(formData.teachers));
+      }
+  
+      const response = await axios.patch(
+        `${import.meta.env.VITE_BASEURI}/user/updateProfile`,
+        formDataToSend,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+           withCredentials: true,
+        }
+      );
+  
+      setMessage(response.data.message);
+    } catch (error) {
+      setMessage(error.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
   
 
   useEffect(() => {
@@ -290,7 +298,7 @@ export default function UserDashboard() {
             </div>
         
             {/* Email Input */}
-             {/* <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3">
               <Mail className="w-6 h-6 text-purple-500" />
               <input
                 type="email"
@@ -300,7 +308,7 @@ export default function UserDashboard() {
                 placeholder="Change Email Address"
                 className="p-3 border border-gray-300 rounded-md w-full focus:ring-2 focus:ring-purple-500"
               />
-            </div> */}
+            </div>
         
             {/* Profile Picture Upload */}
             <div className="flex items-center space-x-3">
