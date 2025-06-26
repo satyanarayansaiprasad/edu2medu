@@ -125,51 +125,43 @@ export default function UserDashboard() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
-  
-    if (!user || !user.email) {
-      setMessage("Email is missing.");
-      setLoading(false);
-      return;
-    }
-  
-    try {
-      const formDataToSend = new FormData();
-      // formDataToSend.append("email", user.email);
-  
-      Object.keys(formData).forEach((key) => {
-        if (key !== "teachers" && formData[key]) {
-          formDataToSend.append(key, formData[key]);
-        }
-      });
-  
-      if (profilePicture) {
-        formDataToSend.append("image", profilePicture);
+  e.preventDefault();
+  setLoading(true);
+  setMessage("");
+
+  try {
+    const formDataToSend = new FormData();
+
+    Object.keys(formData).forEach((key) => {
+      if (key !== "teachers" && formData[key]) {
+        formDataToSend.append(key, formData[key]);
       }
-  
-      // Ensure teachers is a valid JSON string before appending
-      if (Array.isArray(formData.teachers)) {
-        formDataToSend.append("teachers", JSON.stringify(formData.teachers));
-      }
-  
-      const response = await axios.patch(
-        `${import.meta.env.VITE_BASEURI}/user/updateProfile`,
-        formDataToSend,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-           withCredentials: true,
-        }
-      );
-  
-      setMessage(response.data.message);
-    } catch (error) {
-      setMessage(error.response?.data?.message || "Something went wrong");
-    } finally {
-      setLoading(false);
+    });
+
+    if (profilePicture) {
+      formDataToSend.append("image", profilePicture);
     }
-  };
+
+    if (Array.isArray(formData.teachers)) {
+      formDataToSend.append("teachers", JSON.stringify(formData.teachers));
+    }
+
+    const response = await axios.patch(
+      `${import.meta.env.VITE_BASEURI}/user/updateProfile`,
+      formDataToSend,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      }
+    );
+
+    setMessage(response.data.message);
+  } catch (error) {
+    setMessage(error.response?.data?.message || "Something went wrong");
+  } finally {
+    setLoading(false);
+  }
+};
   
 
   useEffect(() => {
