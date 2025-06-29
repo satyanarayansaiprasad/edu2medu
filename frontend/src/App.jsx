@@ -34,6 +34,7 @@ import AdminResetPassword from "./components/AdminResetPassword.jsx";
 import AdminForgotPassword from "./components/AdminForgotPassword.jsx";
 
 import SearchResult from "./components/SearchResult.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 // import PaymentPage from "./components/PaymentPage.jsx";
 
 // Layout component that includes Header and Footer
@@ -48,6 +49,7 @@ const MainLayout = ({ children }) => (
 function App() {
   return (
     <Router>
+       <ScrollToTop />
       <Routes>
         {/* Home Route */}
         <Route
